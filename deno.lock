@@ -43,6 +43,7 @@
     "packageJson": {
       "dependencies": [
         "npm:@types/node@20",
+        "npm:bun-types@^1.2.4",
         "npm:ts-node@^10.9.1",
         "npm:typescript@5"
       ]
