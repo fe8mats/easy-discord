@@ -1,0 +1,19 @@
+{
+  "name": "universal-js-project",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./src/main.ts",
+  "scripts": {
+    "start:node": "node --loader ts-node/esm src/main.ts",
+    "start:bun": "bun src/main.ts",
+    "start:deno": "deno run --allow-read src/main.ts",
+    "test:node": "node --loader ts-node/esm test/test.ts",
+    "test:bun": "bun test",
+    "test:deno": "deno test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+} 
