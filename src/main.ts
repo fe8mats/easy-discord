@@ -5,7 +5,7 @@ type SlashCommand = {
 
 type SlashCommandHandler = (interaction: any) => Promise<void> | void;
 
-class DiscordClient {
+class EasyDiscord {
   private token: string;
   private clientId: string;
   private slashCommands: SlashCommand[] = [];
@@ -39,4 +39,4 @@ class DiscordClient {
 }
 
 // For module usage
-export { DiscordClient }; 
+export { EasyDiscord }; 
