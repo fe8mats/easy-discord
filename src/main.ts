@@ -1,21 +1,42 @@
-// Runtime detection utility
-const getRuntimeEnv = () => {
-  if (typeof Deno !== "undefined") {
-    return "Deno";
-  }
-  if (typeof Bun !== "undefined") {
-    return "Bun";
-  }
-  return "Node.js";
+type SlashCommand = {
+  name: string;
+  description: string;
 };
 
-// Example function that works across all runtimes
-const greet = (name: string): string => {
-  return `Hello, ${name}! Running on ${getRuntimeEnv()}`;
-};
+type SlashCommandHandler = (interaction: any) => Promise<void> | void;
 
-// Main execution
-console.log(greet("Developer"));
+class DiscordClient {
+  private token: string;
+  private clientId: string;
+  private slashCommands: SlashCommand[] = [];
+  private slashCommandHandlers: { [key: string]: SlashCommandHandler } = {};
+  constructor(token: string, clientId: string) {
+    this.token = token;
+    this.clientId = clientId;
+  }
+
+  public addSlashCommand(command: SlashCommand, handle: SlashCommandHandler) {
+    this.slashCommands.push(command);
+    this.slashCommandHandlers[command.name] = handle;
+    return this;
+  }
+
+  public async applySlashCommands<T>(commands: SlashCommand[]): Promise<T> {
+    const response = await fetch("https://discord.com/api/v10/applications/" + this.clientId + "/commands", {
+      method: "POST",
+      body: JSON.stringify(commands),
+      headers: {
+        "Authorization": "Bot " + this.token,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error('response error');
+    }
+    const data: T = await response.json();
+    return data;
+  }
+}
 
 // For module usage
-export { greet, getRuntimeEnv }; 
+export { DiscordClient }; 
