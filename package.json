@@ -1,5 +1,5 @@
 {
-  "name": "universal-js-project",
+  "name": "easy-discord",
   "version": "1.0.0",
   "type": "module",
   "exports": "./src/main.ts",
